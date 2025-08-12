@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Reseller Panel – Professional Neon</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --red:#ff003c;
+      --cyan:#00f5ff;
+      --bg:#0c0c0c;
+      --surface:#151515;
+      --surface-light:#1f1f1f;
+      --text:#ffffff;
+      --radius:12px;
+    }
+    *{box-sizing:border-box}
+    html,body{
+      height:100%;
+      margin:0;
+      font-family:'Inter',sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+    body::before{ /* animated cyan grid */
+      content:'';
+      position:fixed;
+      inset:0;
+      z-index:-1;
+      background:linear-gradient(to right,var(--cyan) .5px,transparent .5px) 0 0 / 40px 40px,
+                 linear-gradient(to bottom,var(--red) .5px,transparent .5px) 0 0 / 40px 40px;
+      opacity:.06;
+      animation:bgFloat 6s linear infinite alternate;
+    }
+    @keyframes bgFloat{
+      0%{transform:translateY(0) rotate(0)}
+      100%{transform:translateY(-40px) rotate(1deg)}
+    }
+
+    .card{
+      width:480px;
+      max-width:calc(100vw - 32px);
+      background:var(--surface);
+      border:1px solid rgba(0,245,255,.15);
+      border-radius:var(--radius);
+      box-shadow:
+        0 0 0 1px rgba(255,0,60,.2),
+        0 8px 32px rgba(0,245,255,.12),
+        0 0 40px rgba(255,0,60,.08);
+      padding:40px;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:16px;
+      margin-bottom:32px;
+    }
+    .brand svg{
+      width:48px;height:48px;
+      fill:url(#grad1);
+    }
+    .brand h1{
+      font-size:24px;
+      font-weight:700;
+      background:linear-gradient(90deg,var(--red),var(--cyan));
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+    }
+
+    label{
+      display:block;
+      font-size:14px;
+      font-weight:600;
+      margin-bottom:6px;
+      color:var(--cyan);
+    }
+    input,select{
+      width:100%;
+      padding:14px 16px;
+      margin-bottom:20px;
+      background:var(--surface-light);
+      border:1px solid rgba(0,245,255,.3);
+      border-radius:var(--radius);
+      color:var(--text);
+      font-size:15px;
+      outline:none;
+      transition:border .2s,box-shadow .2s;
+    }
+    input:focus,select:focus{
+      border-color:var(--red);
+      box-shadow:0 0 0 3px rgba(255,0,60,.25);
+    }
+
+    button{
+      width:100%;
+      padding:14px;
+      background:linear-gradient(135deg,var(--red),var(--cyan));
+      border:none;
+      border-radius:var(--radius);
+      color:#000;
+      font-weight:700;
+      font-size:16px;
+      cursor:pointer;
+      transition:transform .15s;
+    }
+    button:active{transform:scale(.97)}
+    .note{
+      margin-top:14px;
+      font-size:13px;
+      color:#aaa;
+    }
+    .result-box{
+      margin-top:20px;
+      padding:20px;
+      background:var(--surface-light);
+      border-left:4px solid var(--cyan);
+      border-radius:var(--radius);
+      font-size:14px;
+      line-height:1.5;
+    }
+    .success{color:var(--cyan);font-weight:600}
+    .error{color:var(--red);font-weight:600}
+    .loading{
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      gap:8px;
+      margin:20px 0;
+    }
+    .loading span{
+      width:8px;height:8px;
+      background:var(--red);
+      border-radius:50%;
+      animation:dot 1.4s ease-in-out infinite both;
+    }
+    .loading span:nth-child(2){background:var(--cyan);animation-delay:.2s}
+    .loading span:nth-child(3){animation-delay:.4s}
+    @keyframes dot{
+      0%,80%,100%{transform:scale(0);opacity:.5}
+      40%{transform:scale(1);opacity:1}
+    }
+
+    .hidden{display:none}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <!-- Brand -->
+    <div class="brand">
+      <!-- simple neon cube SVG -->
+      <svg viewBox="0 0 24 24">
+        <defs>
+          <linearGradient id="grad1" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#ff003c"/>
+            <stop offset="100%" stop-color="#00f5ff"/>
+          </linearGradient>
+        </defs>
+        <path d="M12 2L2 7v10l10 5 10-5V7l-10-5z"/>
+      </svg>
+      <h1>Reseller Panel Pro</h1>
+    </div>
+
+    <!-- STEP 1 -->
+    <form id="step1" onsubmit="login(event)">
+      <label>Username</label>
+      <input id="username" type="text" placeholder="Masukkan username kamu" required>
+
+      <label>Password</label>
+      <input id="password" type="password" placeholder="Masukkan password..." required>
+
+      <label>Pilih Paket RAM</label>
+      <select id="paket" required>
+        <option value="" disabled selected>-- Pilih --</option>
+        <option value="1gb">1 GB</option>
+        <option value="2gb">2 GB</option>
+        <option value="3gb">3 GB</option>
+        <option value="4gb">4 GB</option>
+        <option value="5gb">5 GB</option>
+        <option value="6gb">6 GB</option>
+        <option value="7gb">7 GB</option>
+        <option value="8gb">8 GB</option>
+        <option value="9gb">9 GB</option>
+        <option value="10gb">10 GB</option>
+        <option value="unli">Unlimited</option>
+      </select>
+
+      <button type="submit">LOGIN & BUAT PANEL</button>
+      <p class="note">Gunakan password khusus <strong>ResellerPanelByResming#2025!</strong></p>
+    </form>
+
+    <!-- LOADING -->
+    <div id="loadingStep" class="hidden">
+      <div class="loading">
+        <span></span><span></span><span></span>
+      </div>
+      <p style="text-align:center;font-size:14px">Building panel...</p>
+    </div>
+
+    <!-- SUCCESS -->
+    <div id="step2" class="hidden">
+      <div class="result-box">
+        <p class="success">✅ PANEL BERHASIL DIBUAT!</p>
+        <p><strong>Email:</strong> <span id="email">-</span></p>
+        <p><strong>Username:</strong> <span id="uname">-</span></p>
+        <p><strong>Password:</strong> <span id="pass">-</span></p>
+        <p><strong>Link:</strong> <a href="https://pengumuman-reseller-panel.vercel.app" target="_blank" style="color:var(--cyan)">Masuk panel</a></p>
+        <p><strong>Paket RAM:</strong> <span id="ram">-</span></p>
+      </div>
+      <button onclick="resetForm()">⬅ KEMBALI</button>
+    </div>
+
+    <!-- ERROR -->
+    <div id="errorStep" class="hidden">
+      <div class="result-box">
+        <p class="error">❌ GAGAL MEMBUAT PANEL</p>
+        <p id="errorText"></p>
+      </div>
+      <button onclick="resetForm()">⬅ KEMBALI</button>
+    </div>
+  </div>
+
+  <script>
+    const hargaPaket = {
+      "1gb":{ram:1000,disk:1000,cpu:40},
+      "2gb":{ram:2000,disk:1000,cpu:60},
+      "3gb":{ram:3000,disk:2000,cpu:80},
+      "4gb":{ram:4000,disk:2000,cpu:100},
+      "5gb":{ram:5000,disk:3000,cpu:120},
+      "6gb":{ram:6000,disk:3000,cpu:140},
+      "7gb":{ram:7000,disk:4000,cpu:160},
+      "8gb":{ram:8000,disk:4000,cpu:180},
+      "9gb":{ram:9000,disk:5000,cpu:200},
+      "10gb":{ram:10000,disk:5000,cpu:220},
+      "unli":{ram:0,disk:0,cpu:0}
+    };
+    function resetForm(){
+      ['step1','loadingStep','step2','errorStep'].forEach(id=>document.getElementById(id).classList.add('hidden'));
+      document.getElementById('step1').classList.remove('hidden');
+    }
+    async function login(e){
+      e.preventDefault();
+      const u=document.getElementById('username').value.trim();
+      const p=document.getElementById('password').value.trim();
+      const paket=document.getElementById('paket').value;
+      if(!u||!p||!paket){alert('Isi semua data!');return;}
+      if(p!=='ResellerPanelByResming_9*7A'){alert('Password salah!');return;}
+
+      document.getElementById('step1').classList.add('hidden');
+      document.getElementById('loadingStep').classList.remove('hidden');
+
+      const conf=hargaPaket[paket]||{disk:1000,cpu:50};
+      try{
+        const url=`https://api.nvidiabotz.xyz/pterodactyl/addpanel?domain=https://zeroctapremium.centzzcloud.my.id&plta=ptla_lNVipSXCwROu90mRLxEgRRLljzvcB4Q8CvJCaJhEjYA&username=${username}&disk=${conf.disk}&cpu=${conf.cpu}`;
+        const res=await fetch(url);
+        const data=await res.json();
+        if(data?.user?.attributes){
+          document.getElementById('email').textContent=data.user.attributes.email||`${u}@example.com`;
+          document.getElementById('uname').textContent=data.user.attributes.username||u;
+          document.getElementById('pass').textContent=p;
+          document.getElementById('ram').textContent=paket.toUpperCase();
+          document.getElementById('loadingStep').classList.add('hidden');
+          document.getElementById('step2').classList.remove('hidden');
+        }else throw new Error('Respon API tidak sesuai.');
+      }catch(err){
+        document.getElementById('errorText').textContent=err.message||String(err);
+        document.getElementById('loadingStep').classList.add('hidden');
+        document.getElementById('errorStep').classList.remove('hidden');
+      }
+    }
+  </script>
+</body>
+</html>
