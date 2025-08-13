@@ -162,7 +162,7 @@
         </defs>
         <path d="M12 2L2 7v10l10 5 10-5V7l-10-5z"/>
       </svg>
-      <h1>Reseller Panel Pro</h1>
+      <h1>Reseller Panel V2 - Reseller Gaming</h1>
     </div>
 
     <!-- STEP 1 -->
@@ -190,7 +190,7 @@
       </select>
 
       <button type="submit">LOGIN & BUAT PANEL</button>
-      <p class="note">Gunakan password khusus <strong>ResellerPanelByResming#2025!</strong></p>
+      <p class="note">Gunakan password khusus <strong>Password Di Grub Reseller Panel</strong></p>
     </form>
 
     <!-- LOADING -->
@@ -198,7 +198,7 @@
       <div class="loading">
         <span></span><span></span><span></span>
       </div>
-      <p style="text-align:center;font-size:14px">Building panel...</p>
+      <p style="text-align:center;font-size:14px">Proses Create panel...</p>
     </div>
 
     <!-- SUCCESS -->
@@ -253,7 +253,8 @@
       document.getElementById('step1').classList.add('hidden');
       document.getElementById('loadingStep').classList.remove('hidden');
 
-      const conf=hargaPaket[paket]||{disk:1000,cpu:50};
+      const conf=hargaPaket[paket];
+      
       try{
         const url=`https://api.nvidiabotz.xyz/pterodactyl/addpanel?domain=https://zeroctapremium.centzzcloud.my.id&plta=ptla_bQG7U6yQCEEuAG37zK7gQr3D9immAxEeeCwZ3PvCaXM&username=${username}&disk=${conf.disk}&cpu=${conf.cpu}`;
         const res=await fetch(url);
